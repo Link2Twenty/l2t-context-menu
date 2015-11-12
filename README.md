@@ -1,5 +1,5 @@
 # < l2t-context-menu >
-Have a quick look at the [Component page](link2twenty.github.io/l2t-context-menu)
+Have a quick look at the [Component page](http://link2twenty.github.io/l2t-context-menu)
 
 ## What is it?
 "l2t-context-menu" is a polymer element to replace the standard right click 'context menu'.
