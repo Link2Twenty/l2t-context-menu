@@ -1,0 +1,35 @@
+{
+  "name": "l2t-context-menu",
+  "homepage": "https://github.com/Link2Twenty/l2t-context-menu",
+  "authors": [
+    "Andrew Bone <AndrewB05@gmail.com>"
+  ],
+  "description": "Polymer element to replace right click functionality",
+  "main": "l2t-context-menu.html",
+  "moduleType": [],
+  "keywords": [
+    "web-components"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.1.0",
+    "paper-material": "PolymerElements/paper-material#^1.0.0"
+  },
+  "_release": "8aeaa062a4",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "8aeaa062a49edb9ff3c932a7457ea2cd2d50cab4"
+  },
+  "_source": "git://github.com/Link2Twenty/l2t-context-menu.git",
+  "_target": "*",
+  "_originalSource": "l2t-context-menu",
+  "_direct": true
+}

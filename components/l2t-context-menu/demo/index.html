@@ -1,0 +1,41 @@
+<html>
+	<head>
+		<title>l2t-context-menu</title>
+		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+		<meta name="theme-color" content="#003366">
+		<script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+		
+		<link rel="import" href="../../l2t-context-menu/l2t-context-menu.html">
+	</head>
+	  
+  <body>
+    <b>To do:</b>
+    <li class="deletable">Wake up</li>
+    <li class="deletable">Eat Breakfast</li>
+    <li class="deletable">Brush Teeth</li>
+    <li class="deletable">Nap time?</li>
+    <br>
+    <br>
+    <b>Creative usage:</b>
+    <div style="background:green;width:100px;height:100px;margin:5 25px;" class="colorbox"></div>
+
+
+    <l2t-context-menu parentclass="deletable">
+      <li><b>Delete Menu:</b></li>
+      <li><a href="#">Delete</a></li>
+    </l2t-context-menu>
+    <l2t-context-menu parentclass="colorbox">
+      <li><b>A different menu:</b></li>
+      <li><a href='javascript:colorupdate("Red")'>Red</a></li>
+      <li><a href='javascript:colorupdate("Blue")'>Blue</a></li>
+      <li><a href='javascript:colorupdate("Yellow")'>Yellow</a></li>
+    </l2t-context-menu>
+
+    <script>
+      function colorupdate(e) {
+        document.querySelector(".colorbox").style.backgroundColor = e;
+      }
+    </script>
+
+  </body>
+</html>

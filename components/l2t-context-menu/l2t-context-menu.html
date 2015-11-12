@@ -1,0 +1,184 @@
+<link rel="import" href="../paper-material/paper-material.html" />
+
+<!--
+Polymer element to replace right click functionality.
+
+__Example:__
+
+    <l2t-context-menu parentclass="deletable">
+      <li>
+        <a href="#">Delete</a>
+      </li>
+    </l2t-context-menu>
+
+@demo
+-->
+
+<dom-module id="l2t-context-menu">
+  <style>
+  .context-menu {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    padding: 12px;
+    background-color: #fff;
+  }
+
+  .context-menu--active {
+    display: block;
+  }
+
+  .context-menu__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  ::content li{
+    display: block;
+    color: #333;
+    padding: 2px;
+  }
+
+  ::content li:last-child {
+    margin-bottom: 0;
+  }
+
+  ::content a {
+    display: block;
+    color: #0066aa;
+    padding: 4px 12px;
+    text-decoration: none;
+  }
+
+  ::content a:hover {
+    color: #fff;
+    background-color: #0066aa;
+  }
+  </style>
+  <template>
+    <paper-material id="context-menu" class="context-menu" elevation="2">
+      <ul class="context-menu__items">
+        <content></content>
+      </ul>
+    </paper-material>
+  </template>
+</dom-module>
+<script>
+  ( function () {
+    Polymer({
+      is: 'l2t-context-menu',
+      properties: {
+        /**
+        * Sting for storing class name
+        * of which classes should be listened too
+        *
+        * @attribute parentclass
+        * @type String
+        * @default "default"
+        */
+        parentclass: {
+          type: String,
+          value: 'default',
+          notify: true
+        },
+      },
+      /**
+      * Starting the scripts
+      * domReady for when the dom is... rea
+      *
+      */
+      ready: function() {
+        function clickInsideElement(e,t){
+          var n=e.srcElement||e.target;
+          if(n.classList.contains(t))return n;
+            for(;n=n.parentNode;)
+           if(n.classList&&n.classList.contains(t))return n;
+            return!1
+        }
+
+        function getPosition(e){
+          var t=0,
+          n=0;
+          if(!e)var e=window.event;
+          return e.pageX||e.pageY?(t=e.pageX,n=e.pageY):
+          (e.clientX||e.clientY)&&(t=e.clientX+document.body.scrollLeft+document.documentElement.scrollLeft,n=e.clientY+document.body.scrollTop+document.documentElement.scrollTop),
+          {x:t,y:n}
+        }
+        function init(){
+          contextListener(),
+          clickListener(),
+          keyupListener(),
+          resizeListener()
+        }
+        function contextListener(){
+          document.addEventListener("contextmenu",function(e){
+            taskItemInContext=clickInsideElement(e,
+            taskItemClassName),
+            taskItemInContext?(e.preventDefault(),toggleMenuOn(),positionMenu(e)):(taskItemInContext=null,toggleMenuOff())
+          })
+        }
+        function clickListener(){
+          document.addEventListener("click",function(e){
+            var t=clickInsideElement(e,contextMenuLinkClassName);
+            if(t)e.preventDefault(),
+              menuItemListener(t);
+            else{
+              var n=e.which||e.button;
+              1===n&&toggleMenuOff()
+            }
+          })
+        }
+        function keyupListener(){
+          window.onkeyup=function(e){
+            27===e.keyCode&&toggleMenuOff()
+          }
+        }
+        function resizeListener(){
+          window.onresize=function(){
+            toggleMenuOff()
+          }
+        }
+        function toggleMenuOn(){
+          1!==menuState&&(menuState=1,
+          menu.classList.add(contextMenuActive))
+        }
+        function toggleMenuOff(){
+          0!==menuState&&(menuState=0,
+          menu.classList.remove(contextMenuActive))
+        }
+        function positionMenu(e){
+          clickCoords=getPosition(e),
+          clickCoordsX=clickCoords.x,
+          clickCoordsY=clickCoords.y,
+          menuWidth=menu.offsetWidth+4,
+          menuHeight=menu.offsetHeight+4,
+          windowWidth=window.innerWidth,
+          windowHeight=window.innerHeight,
+          menu.style.left=menuWidth>windowWidth-clickCoordsX?windowWidth-menuWidth+"px":clickCoordsX+"px",
+          menu.style.top=menuHeight>windowHeight-clickCoordsY?windowHeight-menuHeight+"px":clickCoordsY+"px"
+        }
+        var contextMenuClassName="context-menu",
+        contextMenuItemClassName="context-menu__item",
+        contextMenuLinkClassName="context-menu__link",
+        contextMenuActive="context-menu--active",
+        taskItemClassName=this.parentclass,
+        taskItemInContext,
+        clickCoords,
+        clickCoordsX,
+        clickCoordsY,
+        menu=Polymer.dom(this.root).querySelector("#context-menu"),
+        menuItems=menu.querySelectorAll(".context-menu__item"),
+        menuState=0,
+        menuWidth,
+        menuHeight,
+        menuPosition,
+        menuPositionX,
+        menuPositionY,
+        windowWidth,
+        windowHeight;
+        init();
+      }
+    });
+  })();
+</script>
