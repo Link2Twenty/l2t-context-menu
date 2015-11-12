@@ -4,6 +4,10 @@ Have a quick look at the [Component page](http://link2twenty.github.io/l2t-conte
 ## What is it?
 "l2t-context-menu" is a polymer element to replace the standard right click 'context menu'.
 
+Here's a sneak peak of the demo page
+
+![Screenshot](https://media.giphy.com/media/3oEduNTdEfa03WUZPO/giphy.gif)
+
 ## Getting started
 
 ### Install with bower
