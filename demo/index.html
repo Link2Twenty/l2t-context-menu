@@ -1,0 +1,72 @@
+<html>
+<head>
+	<title>Pull to Action</title>
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+	<meta name="theme-color" content="#003366">
+	<script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+
+	<link rel="import" href="bower_components/font-roboto/roboto.html">
+	<link rel="import" href="bower_components/paper-toolbar/paper-toolbar.html">
+	<link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html">
+	<link rel="import" href="bower_components/paper-input/paper-input.html">
+	<link rel="import" href="bower_components/paper-material/paper-material.html">
+	<link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
+	<link rel="import" href="bower_components/pull-to-action/pull-to-action.html">
+	<link rel="stylesheet" type="text/css" href="../style/default.css">
+  <style>
+    .refreshShadow.pull-to-action {
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+<paper-drawer-panel>
+	<div drawer class="top">
+		<paper-toolbar>
+		<span>Notifications:</span>
+		</paper-toolbar>
+	</div>
+	<div main>
+		<paper-toolbar>
+		<span>Main area:</span>
+		<div class="bodycontainer">
+		<pull-to-action color="blue" container=".bodycontainer" action="changeText()"></pull-to-action>
+			<div class="container" id="container">
+			</div>
+			</paper-toolbar>
+		</div>
+	</div>
+</paper-drawer-panel>
+
+<script>
+function changeText(){
+  var t=new Promise(function(t,e){
+    actionTrigger=1;
+    var n=new XMLHttpRequest;
+    n.open("GET","json.js",!0),
+    n.onload=function(){
+      this.status>=200&&this.status<400?t(this.response):e(Error(n.statusText))
+    },
+    n.onerror=function(){
+      e(Error("Timeout error"))
+    },
+    n.send()
+  });
+  t.then(function(t){
+    var e,n=JSON.parse(t),
+    r="";
+    for(e=0;
+    e<n.update.length;e++)r+='<paper-material elevation="1" class="updateItems">'+n.update[e].message+"</paper-material><br>";
+    document.getElementById("container").innerHTML=r,
+    actionTrigger=0
+  })["catch"](function(){
+    actionTrigger=0
+  })
+}
+var actionTrigger;
+changeText();
+</script>
+
+</body>
