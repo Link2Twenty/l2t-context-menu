@@ -21,7 +21,7 @@ __Example:__
     position: absolute;
     z-index: 10;
     padding: 12px;
-    background-color: #fff;
+    background-color: var(--context-back-color);
   }
 
   .context-menu--active {
@@ -36,7 +36,7 @@ __Example:__
 
   ::content li{
     display: block;
-    color: #333;
+    color: var(--context-head-color);
     padding: 2px;
   }
 
@@ -46,14 +46,14 @@ __Example:__
 
   ::content a {
     display: block;
-    color: #0066aa;
+    color: var(--context-link-color);
     padding: 4px 12px;
     text-decoration: none;
   }
 
   ::content a:hover {
-    color: #fff;
-    background-color: #0066aa;
+    background-color: var(--context-link-color);
+    color: var(--context-back-color);
   }
   </style>
   <template>
@@ -82,6 +82,56 @@ __Example:__
           value: 'default',
           notify: true
         },
+        /**
+        * Sting for storing theme color
+        * for mouse over and link color
+        *
+        * @attribute linkcolor
+        * @type String
+        * @default "#0066aa"
+        */
+        linkcolor: {
+          type: String,
+          value: '#0066aa',
+          notify: true
+        },
+        /** 
+        * Sting for storing theme color
+        * for background color
+        *
+        * @attribute backcolor
+        * @type String
+        * @default "#fff"
+        */
+        backcolor: {
+          type: String,
+          value: '#fff',
+          notify: true
+        },
+        /** 
+        * Sting for storing theme color
+        * for background color
+        *
+        * @attribute headcolor
+        * @type String
+        * @default "#333"
+        */
+        headcolor: {
+          type: String,
+          value: '#333',
+          notify: true
+        },
+      },
+      /**
+      * Function to set mouse over colors
+      * called when the dom is ready
+      *
+      */
+      themeInit: function() {
+        this.customStyle['--context-link-color'] = this.linkcolor;
+        this.customStyle['--context-back-color'] = this.backcolor;
+        this.customStyle['--context-head-color'] = this.headcolor;
+        this.updateStyles();
       },
       /**
       * Starting the scripts
@@ -89,6 +139,7 @@ __Example:__
       *
       */
       ready: function() {
+        this.themeInit();
         function clickInsideElement(e,t){
           var n=e.srcElement||e.target;
           if(n.classList.contains(t))return n;
@@ -96,7 +147,6 @@ __Example:__
            if(n.classList&&n.classList.contains(t))return n;
             return!1
         }
-
         function getPosition(e){
           var t=0,
           n=0;
@@ -113,8 +163,7 @@ __Example:__
         }
         function contextListener(){
           document.addEventListener("contextmenu",function(e){
-            taskItemInContext=clickInsideElement(e,
-            taskItemClassName),
+            taskItemInContext=clickInsideElement(e, taskItemClassName),
             taskItemInContext?(e.preventDefault(),toggleMenuOn(),positionMenu(e)):(taskItemInContext=null,toggleMenuOff())
           })
         }

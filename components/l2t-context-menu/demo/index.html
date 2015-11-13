@@ -4,36 +4,53 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
 		<meta name="theme-color" content="#003366">
 		<script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
-		<link rel="import" href="../../l2t-context-menu/l2t-context-menu.html">
-		<style>
-			.deletable, .done{
-				-webkit-touch-callout: none;
-				-webkit-user-select: none;
-				-khtml-user-select: none;
-				-moz-user-select: none;
-				-ms-user-select: none;
-				user-select: none;
-			}
-		</style>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+		<link rel="import" href="../l2t-context-menu.html">
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+      }
+      .deletable, .done, .lines{
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border-bottom: 1px #795548 solid;
+        background: #FFFED6;
+        padding: 15px 0px 0px 15px;
+        width: 25%;
+      }
+      .deletable {
+        text-decoration: none;
+        color: #000;
+      }
+      .done {
+        text-decoration: line-through;
+        color: #777;
+      }
+    </style>
 	</head>
 	  
   <body>
     <b>To do:</b>
-    <li class="deletable" onmousedown="storeDelete(event)" id="Item1">Wake up</li>
-    <li class="deletable" onmousedown="storeDelete(event)" id="Item2">Eat Breakfast</li>
-    <li class="deletable" onmousedown="storeDelete(event)" id="Item3">Brush Teeth</li>
-    <li class="deletable" onmousedown="storeDelete(event)" id="Item4">Nap time?</li>
+    <li class="deletable" onmousedown="storeDelete(event)" id="Item1">1) Wake up</li>
+    <li class="deletable" onmousedown="storeDelete(event)" id="Item2">2) Eat Breakfast</li>
+    <li class="deletable" onmousedown="storeDelete(event)" id="Item3">3) Brush Teeth</li>
+    <li class="deletable" onmousedown="storeDelete(event)" id="Item4">4) Nap time?</li>
+    <li class="lines">&nbsp;</li>
     <br>
     <br>
     <b>Creative usage:</b>
     <div style="background:green;width:100px;height:100px;margin:5 25px;" class="colorbox"></div>
 
 
-    <l2t-context-menu parentclass="deletable">
+    <l2t-context-menu parentclass="deletable" linkcolor="#FFE0B2" backcolor="#F57C00" headcolor="#fff">
       <li><b>Complete Menu:</b></li>
       <li><a href="javascript:deleteFake()">Done</a></li>
     </l2t-context-menu>
-    <l2t-context-menu parentclass="done">
+    <l2t-context-menu parentclass="done" linkcolor="#FFE0B2" backcolor="#F57C00" headcolor="#fff">
       <li><b>Complete Menu:</b></li>
       <li><a href="javascript:undeleteFake()">Redo</a></li>
     </l2t-context-menu>
@@ -55,13 +72,12 @@
         }
       }
       function deleteFake() {
-        document.getElementById(storeClicked).style.textDecoration  = "line-through";
         document.getElementById(storeClicked).className = "done";
       }
       function undeleteFake() {
-        document.getElementById(storeClicked).style.textDecoration  = "none";
         document.getElementById(storeClicked).className = "deletable";
       }
     </script>
+
   </body>
 </html>
