@@ -26,7 +26,7 @@ bower install --save l2t-context-menu
 | linkcolor | Sting for storing theme color for mouse over and link color | "#0066aa" |
 | backcolor | Sting for storing theme color for background color | "#fff" |
 | headcolor | Sting for storing theme color for standard text color | "#333" |
-| sepacolor | Sting for storing theme color for <hr> separaters | "#bcbcbc" |
+| sepacolor | Sting for storing theme color for < hr > separaters | "#bcbcbc" |
 
 required*
 
