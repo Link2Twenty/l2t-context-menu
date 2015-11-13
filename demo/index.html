@@ -4,8 +4,17 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
 		<meta name="theme-color" content="#003366">
 		<script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
-		
 		<link rel="import" href="../../l2t-context-menu/l2t-context-menu.html">
+		<style>
+			.deletable, .done{
+				-webkit-touch-callout: none;
+				-webkit-user-select: none;
+				-khtml-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+				user-select: none;
+			}
+		</style>
 	</head>
 	  
   <body>
@@ -54,6 +63,5 @@
         document.getElementById(storeClicked).className = "deletable";
       }
     </script>
-
   </body>
 </html>
