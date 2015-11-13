@@ -21,8 +21,12 @@
 
 
     <l2t-context-menu parentclass="deletable">
-      <li><b>Delete Menu:</b></li>
-      <li><a href="javascript:deleteFake()">Delete</a></li>
+      <li><b>Complete Menu:</b></li>
+      <li><a href="javascript:deleteFake()">Done</a></li>
+    </l2t-context-menu>
+    <l2t-context-menu parentclass="done">
+      <li><b>Complete Menu:</b></li>
+      <li><a href="javascript:undeleteFake()">Redo</a></li>
     </l2t-context-menu>
     <l2t-context-menu parentclass="colorbox">
       <li><b>A different menu:</b></li>
@@ -37,10 +41,17 @@
         document.querySelector(".colorbox").style.backgroundColor = color;
       }
       function storeDelete(e) {
+        if(e.which == 3) {
           storeClicked = e.target.id;
+        }
       }
       function deleteFake() {
-        document.getElementById(storeClicked).style.display = "none";
+        document.getElementById(storeClicked).style.textDecoration  = "line-through";
+        document.getElementById(storeClicked).className = "done";
+      }
+      function undeleteFake() {
+        document.getElementById(storeClicked).style.textDecoration  = "none";
+        document.getElementById(storeClicked).className = "deletable";
       }
     </script>
 
