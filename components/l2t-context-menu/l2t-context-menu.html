@@ -55,6 +55,10 @@ __Example:__
     background-color: var(--context-link-color);
     color: var(--context-back-color);
   }
+  
+  ::content hr {
+    border-color: var(--context-sepa-color);
+  }
   </style>
   <template>
     <paper-material id="context-menu" class="context-menu" elevation="2">
@@ -110,7 +114,7 @@ __Example:__
         },
         /** 
         * Sting for storing theme color
-        * for background color
+        * for standard text color
         *
         * @attribute headcolor
         * @type String
@@ -119,6 +123,19 @@ __Example:__
         headcolor: {
           type: String,
           value: '#333',
+          notify: true
+        },
+        /** 
+        * Sting for storing theme color
+        * for <hr> separaters
+        *
+        * @attribute sepacolor
+        * @type String
+        * @default "#9a9a9a"
+        */
+        sepacolor: {
+          type: String,
+          value: '#bcbcbc',
           notify: true
         },
       },
@@ -131,6 +148,7 @@ __Example:__
         this.customStyle['--context-link-color'] = this.linkcolor;
         this.customStyle['--context-back-color'] = this.backcolor;
         this.customStyle['--context-head-color'] = this.headcolor;
+        this.customStyle['--context-sepa-color'] = this.sepacolor;
         this.updateStyles();
       },
       /**

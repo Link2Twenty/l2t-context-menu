@@ -23,6 +23,9 @@ bower install --save l2t-context-menu
 | Attribute Name | Functionality | Default |
 |----------------|-------------|-------------|
 | parentclass* | Sting for storing class name of which classes should be listened too | "default" |
+| linkcolor | Sting for storing theme color for mouse over and link color | "#0066aa" |
+| backcolor | Sting for storing theme color for background color | "#fff" |
+| headcolor | Sting for storing theme color for standard text color | "#333" |
 
 required*
 
@@ -50,6 +53,17 @@ Text with a standard context menu
 ```
 
 And just like that you have a custom menu, right click within the div and the custom menu opens right click anywhere else and you get the standard one.
+
+To theme the menu from above we would have added a few extra attributes
+
+```html
+<l2t-context-menu parentclass="specialcase" linkcolor="#FFE0B2" backcolor="#F57C00" headcolor="#fff">
+  <li><a href="#">Item 1</a></li>
+  <li><a href="#">Item 2</a></li>
+</l2t-context-menu>
+```
+
+These are, of course, optional extras to make the menu match your own app a little better.
 
 ### Long press
 
