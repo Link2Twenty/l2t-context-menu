@@ -48,3 +48,22 @@ Text with a standard context menu
 </l2t-context-menu>
 </body>
 ```
+
+And just like that you have a custom menu, right click within the div and the custom menu opens right click anywhere else and you get the standard one.
+
+### Long press
+
+On mobile you can simulate a right click by long pressing, which is great and means this menu is inherently compatible.
+Unfortunately if you long press text the select box takes president over the right click functionality, meaning the menu does not appear.
+
+The easy way around this is to have some CSS to dissable text select such as
+```css
+  .nonselectable{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+```
