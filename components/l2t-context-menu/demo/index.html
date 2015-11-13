@@ -10,10 +10,10 @@
 	  
   <body>
     <b>To do:</b>
-    <li class="deletable">Wake up</li>
-    <li class="deletable">Eat Breakfast</li>
-    <li class="deletable">Brush Teeth</li>
-    <li class="deletable">Nap time?</li>
+    <li class="deletable" onmousedown="storeDelete(event)" id="Item1">Wake up</li>
+    <li class="deletable" onmousedown="storeDelete(event)" id="Item2">Eat Breakfast</li>
+    <li class="deletable" onmousedown="storeDelete(event)" id="Item3">Brush Teeth</li>
+    <li class="deletable" onmousedown="storeDelete(event)" id="Item4">Nap time?</li>
     <br>
     <br>
     <b>Creative usage:</b>
@@ -22,18 +22,25 @@
 
     <l2t-context-menu parentclass="deletable">
       <li><b>Delete Menu:</b></li>
-      <li><a href="#">Delete</a></li>
+      <li><a href="javascript:deleteFake()">Delete</a></li>
     </l2t-context-menu>
     <l2t-context-menu parentclass="colorbox">
       <li><b>A different menu:</b></li>
-      <li><a href='javascript:colorupdate("Red")'>Red</a></li>
-      <li><a href='javascript:colorupdate("Blue")'>Blue</a></li>
-      <li><a href='javascript:colorupdate("Yellow")'>Yellow</a></li>
+      <li><a href='javascript:colorUpdate("Red")'>Red</a></li>
+      <li><a href='javascript:colorUpdate("Blue")'>Blue</a></li>
+      <li><a href='javascript:colorUpdate("Yellow")'>Yellow</a></li>
     </l2t-context-menu>
 
     <script>
-      function colorupdate(e) {
-        document.querySelector(".colorbox").style.backgroundColor = e;
+      var storeClicked;
+      function colorUpdate(color) {
+        document.querySelector(".colorbox").style.backgroundColor = color;
+      }
+      function storeDelete(e) {
+          storeClicked = e.target.id;
+      }
+      function deleteFake() {
+        document.getElementById(storeClicked).style.display = "none";
       }
     </script>
 

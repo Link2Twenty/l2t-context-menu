@@ -8,6 +8,8 @@
   "main": "l2t-context-menu.html",
   "moduleType": [],
   "keywords": [
+    "polymer",
+    "polymer-1.0",
     "web-components"
   ],
   "license": "MIT",
