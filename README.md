@@ -62,7 +62,9 @@ And just like that you have a custom menu, right click within the div and the cu
 To theme the menu from above we would have added a few extra attributes
 
 ```html
-<l2t-context-menu parentclass="specialcase" linkcolor="#FFE0B2" backcolor="#F57C00" headcolor="#fff" sepacolor="#FFE0B2">
+<l2t-context-menu parentclass="specialcase" 
+  linkcolor="#FFE0B2" backcolor="#F57C00" 
+  headcolor="#fff" sepacolor="#FFE0B2">
   <li><b>First List Items:</b></li>
   <li><a href="#">Item 1</a></li>
   <li><a href="#">Item 2</a></li>
