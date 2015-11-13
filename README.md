@@ -26,6 +26,7 @@ bower install --save l2t-context-menu
 | linkcolor | Sting for storing theme color for mouse over and link color | "#0066aa" |
 | backcolor | Sting for storing theme color for background color | "#fff" |
 | headcolor | Sting for storing theme color for standard text color | "#333" |
+| sepacolor | Sting for storing theme color for <hr> separaters | "#bcbcbc" |
 
 required*
 
@@ -46,8 +47,12 @@ Text with a special context menu
 </div>
 Text with a standard context menu
 <l2t-context-menu parentclass="specialcase">
+  <li><b>First List Items:</b></li>
   <li><a href="#">Item 1</a></li>
   <li><a href="#">Item 2</a></li>
+  <hr>
+  <li><b>More Items:</b></li>
+  <li><a href="#">Item 3</a></li>
 </l2t-context-menu>
 </body>
 ```
@@ -57,11 +62,17 @@ And just like that you have a custom menu, right click within the div and the cu
 To theme the menu from above we would have added a few extra attributes
 
 ```html
-<l2t-context-menu parentclass="specialcase" linkcolor="#FFE0B2" backcolor="#F57C00" headcolor="#fff">
+<l2t-context-menu parentclass="specialcase" linkcolor="#FFE0B2" backcolor="#F57C00" headcolor="#fff" sepacolor="#FFE0B2">
+  <li><b>First List Items:</b></li>
   <li><a href="#">Item 1</a></li>
   <li><a href="#">Item 2</a></li>
+  <hr>
+  <li><b>More Items:</b></li>
+  <li><a href="#">Item 3</a></li>
 </l2t-context-menu>
 ```
+Let's have a little look at what we just made:
+![Screenshot](https://media.giphy.com/media/3oEduLDQYvcl6cSM2Q/giphy.gif)
 
 These are, of course, optional extras to make the menu match your own app a little better.
 
