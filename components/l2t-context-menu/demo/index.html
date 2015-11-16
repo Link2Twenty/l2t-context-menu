@@ -6,9 +6,11 @@
 		<script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 		<link rel="import" href="../l2t-context-menu.html">
+		<link rel="import" href="../../demo-snippet/demo-snippet.html">
     <style>
       body {
         font-family: 'Roboto', sans-serif;
+        text-align: center;
       }
       .deletable, .done, .lines{
         -webkit-touch-callout: none;
@@ -26,60 +28,86 @@
         text-decoration: none;
         color: #000;
       }
+      .credit {
+        font-size: 11px;
+        float: right;
+        margin: 5px;
+      }
+      .credit a {
+        display:inline;
+        padding: 0;
+      }
       .done {
         text-decoration: line-through;
         color: #777;
+      }
+      demo-snippet {
+      min-width: 75%;
+      margin: 0 auto;
+      text-align: left;
       }
     </style>
 	</head>
 	  
   <body>
-    <b>To do:</b>
-    <li class="deletable" onmousedown="storeDelete(event)" id="Item1">1) Wake up</li>
-    <li class="deletable" onmousedown="storeDelete(event)" id="Item2">2) Eat Breakfast</li>
-    <li class="deletable" onmousedown="storeDelete(event)" id="Item3">3) Brush Teeth</li>
-    <li class="deletable" onmousedown="storeDelete(event)" id="Item4">4) Nap time?</li>
-    <li class="lines">&nbsp;</li>
-    <br>
-    <br>
-    <b>Creative usage:</b>
-    <div style="background:green;width:100px;height:100px;margin:5 25px;" class="colorbox"></div>
-
-
-    <l2t-context-menu parentclass="deletable" linkcolor="#FFE0B2" backcolor="#F57C00" headcolor="#fff">
-      <li><b>Complete Menu:</b></li>
-      <li><a href="javascript:deleteFake()">Done</a></li>
-    </l2t-context-menu>
-    <l2t-context-menu parentclass="done" linkcolor="#FFE0B2" backcolor="#F57C00" headcolor="#fff">
-      <li><b>Complete Menu:</b></li>
-      <li><a href="javascript:undeleteFake()">Redo</a></li>
-    </l2t-context-menu>
-    <l2t-context-menu parentclass="colorbox">
-      <li><b>Selection menu:</b></li>
-      <li><a href='javascript:colorUpdate("Red")'>Red</a></li>
-      <li><a href='javascript:colorUpdate("Blue")'>Blue</a></li>
-      <li><a href='javascript:colorUpdate("Yellow")'>Yellow</a></li>
-      <hr>
-      <li><a href='javascript:colorUpdate("rgba(0,0,0,0)")'>Invisible</a></li>
-    </l2t-context-menu>
-
-    <script>
-      var storeClicked;
-      function colorUpdate(color) {
-        document.querySelector(".colorbox").style.backgroundColor = color;
-      }
-      function storeDelete(e) {
-        if(e.which == 3) {
-          storeClicked = e.target.id;
+    <b>To do:</b><br>
+    <demo-snippet>
+      <li class="deletable" onmousedown="storeDelete(event)" id="Item1">1) Wake up</li>
+      <li class="deletable" onmousedown="storeDelete(event)" id="Item2">2) Eat Breakfast</li>
+      <li class="deletable" onmousedown="storeDelete(event)" id="Item3">3) Brush Teeth</li>
+      <li class="deletable" onmousedown="storeDelete(event)" id="Item4">4) Nap time?</li>
+      <li class="lines">&nbsp;</li>
+    </demo-snippet>
+    <br><br>
+    <b>Creative usage:</b><br>
+    <demo-snippet>
+      <div style="background:green;width:100px;height:100px;margin:5 25px;" class="colorbox"></div>
+    </demo-snippet>
+    <br><br>
+    <b>l2t-context-menu usage:</b><br>
+    <demo-snippet>
+      <!-- First Menu  -->
+      <l2t-context-menu parentclass="deletable" linkcolor="#FFE0B2" backcolor="#F57C00" headcolor="#fff">
+        <li><b>Complete Menu:</b></li>
+        <li><a href="javascript:deleteFake()">Done</a></li>
+      </l2t-context-menu>
+      <!-- Second Menu  -->
+      <l2t-context-menu parentclass="done" linkcolor="#FFE0B2" backcolor="#F57C00" headcolor="#fff">
+        <li><b>Complete Menu:</b></li>
+        <li><a href="javascript:undeleteFake()">Redo</a></li>
+      </l2t-context-menu>
+      <!-- Third Menu  -->
+      <l2t-context-menu parentclass="colorbox">
+        <li><b>Selection menu:</b></li>
+        <li><a href='javascript:colorUpdate("Red")'>Red</a></li>
+        <li><a href='javascript:colorUpdate("Blue")'>Blue</a></li>
+        <li><a href='javascript:colorUpdate("Yellow")'>Yellow</a></li>
+        <hr>
+        <li><a href='javascript:colorUpdate("rgba(0,0,0,0)")'>Invisible</a></li>
+      </l2t-context-menu>
+    </demo-snippet>
+    <br><br>
+    <b>JS script for demo:</b><br>
+    <demo-snippet>
+      <script>
+        var storeClicked;
+        function colorUpdate(color) {
+          document.querySelector(".colorbox").style.backgroundColor = color;
         }
-      }
-      function deleteFake() {
-        document.getElementById(storeClicked).className = "done";
-      }
-      function undeleteFake() {
-        document.getElementById(storeClicked).className = "deletable";
-      }
-    </script>
-
+        function storeDelete(e) {
+          if(e.which == 3) {
+            storeClicked = e.target.id;
+          }
+        }
+        function deleteFake() {
+          document.getElementById(storeClicked).className = "done";
+        }
+        function undeleteFake() {
+          document.getElementById(storeClicked).className = "deletable";
+        }
+      </script>
+    </demo-snippet>
+    <br><br>
+    <span class="credit">Credit to <a href="https://github.com/notwaldorf">@notwaldorf</a> for their work on <a href="https://github.com/notwaldorf/polymer-demo-transmogrifier">demo-snippet</a> which I am using for the demo</span>
   </body>
 </html>
