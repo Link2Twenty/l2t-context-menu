@@ -208,7 +208,8 @@ __Example:__
         }
         function toggleMenuOn(){
           1!==menuState&&(menuState=1,
-          menu.classList.add(contextMenuActive))
+          menu.classList.add(contextMenuActive)),
+          navigator.vibrate([25])
         }
         function toggleMenuOff(){
           0!==menuState&&(menuState=0,
