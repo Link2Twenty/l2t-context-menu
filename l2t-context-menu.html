@@ -6,10 +6,19 @@ Polymer element to replace right click functionality.
 
 __Example:__
 
-    <l2t-context-menu parentclass="deletable">
-      <li>
-        <a href="#">Delete</a>
-      </li>
+    <l2t-context-menu parentclass="standardExample">
+      <paper-item>
+        <a href="#">Normal Item</a>
+      </paper-item>
+    </l2t-context-menu>
+
+    <l2t-context-menu parentclass="submenuExample">
+      <paper-submenu opened>
+        <paper-item class="menu-trigger">Submenu Head</paper-item>
+        <paper-menu class="menu-content">
+          <paper-item><a href='#'>Submenu Item</a></paper-item>
+        </paper-menu>
+      </paper-submenu>
     </l2t-context-menu>
 
 @demo
