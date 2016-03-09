@@ -1,4 +1,5 @@
-<link rel="import" href="../paper-material/paper-material.html" />
+<link rel="import" href="../paper-menu/paper-menu.html" />
+<link rel="import" href="../paper-menu/paper-submenu.html" />
 
 <!--
 Polymer element to replace right click functionality.
@@ -28,13 +29,7 @@ __Example:__
     display: block;
   }
 
-  .context-menu__items {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  ::content li{
+  ::content li, ::content paper-item{
     display: block;
     color: var(--context-head-color);
     padding: 2px;
@@ -59,13 +54,15 @@ __Example:__
   ::content hr {
     border-color: var(--context-sepa-color);
   }
+  
+  ::content .paper-menu-0{
+	background-color: var(--context-back-color);
+  }
   </style>
   <template>
-    <paper-material id="context-menu" class="context-menu" elevation="2">
-      <ul class="context-menu__items">
+    <paper-menu id="context-menu" class="context-menu" elevation="2">
         <content></content>
-      </ul>
-    </paper-material>
+    </paper-menu>
   </template>
 </dom-module>
 <script>
@@ -187,13 +184,10 @@ __Example:__
         }
         function clickListener(){
           document.addEventListener("click",function(e){
-            var t=clickInsideElement(e,contextMenuLinkClassName);
-            if(t)e.preventDefault(),
-              menuItemListener(t);
-            else{
+            var t=clickInsideElement(e,contextMenuClassName);
+            if(!t)
               var n=e.which||e.button;
               1===n&&toggleMenuOff()
-            }
           })
         }
         function keyupListener(){
