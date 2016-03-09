@@ -23,6 +23,8 @@ __Example:__
     z-index: 10;
     padding: 12px;
     background-color: var(--context-back-color);
+	-moz-box-shadow:0 2px 5px 0 rgba(0,0,0,.4);
+	box-shadow:0 2px 5px 0 rgba(0,0,0,.4);
   }
 
   .context-menu--active {
@@ -33,6 +35,10 @@ __Example:__
     display: block;
     color: var(--context-head-color);
     padding: 2px;
+  }
+  
+  ::content paper-item {
+	cursor: pointer;
   }
 
   ::content li:last-child {
@@ -60,7 +66,7 @@ __Example:__
   }
   </style>
   <template>
-    <paper-menu id="context-menu" class="context-menu" elevation="2">
+    <paper-menu id="context-menu" class="context-menu">
         <content></content>
     </paper-menu>
   </template>
@@ -184,7 +190,7 @@ __Example:__
         }
         function clickListener(){
           document.addEventListener("click",function(e){
-            var t=clickInsideElement(e,contextMenuClassName);
+            var t=clickInsideElement(e,contextSubmenuClassName);
             if(!t)
               var n=e.which||e.button;
               1===n&&toggleMenuOff()
@@ -220,9 +226,7 @@ __Example:__
           menu.style.left=menuWidth>windowWidth-clickCoordsX?windowWidth-menuWidth+"px":clickCoordsX+"px",
           menu.style.top=menuHeight>windowHeight-clickCoordsY?windowHeight-menuHeight+"px":clickCoordsY+"px"
         }
-        var contextMenuClassName="context-menu",
-        contextMenuItemClassName="context-menu__item",
-        contextMenuLinkClassName="context-menu__link",
+        var contextSubmenuClassName="menu-trigger",
         contextMenuActive="context-menu--active",
         taskItemClassName=this.parentclass,
         taskItemInContext,
@@ -230,13 +234,9 @@ __Example:__
         clickCoordsX,
         clickCoordsY,
         menu=Polymer.dom(this.root).querySelector("#context-menu"),
-        menuItems=menu.querySelectorAll(".context-menu__item"),
         menuState=0,
         menuWidth,
         menuHeight,
-        menuPosition,
-        menuPositionX,
-        menuPositionY,
         windowWidth,
         windowHeight;
         init();
