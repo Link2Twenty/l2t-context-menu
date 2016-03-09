@@ -6,7 +6,7 @@ Have a quick look at the [Component page](http://link2twenty.github.io/l2t-conte
 
 Here's a sneak peak of the demo page
 
-![Screenshot](https://media.giphy.com/media/3o85xHyclVA9nU4fsY/giphy.gif)
+![Screenshot](https://media.giphy.com/media/3ornjY6GrfvyQFAWxG/giphy.gif)
 
 ## Getting started
 
