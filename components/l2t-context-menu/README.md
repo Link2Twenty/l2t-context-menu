@@ -6,7 +6,7 @@ Have a quick look at the [Component page](http://link2twenty.github.io/l2t-conte
 
 Here's a sneak peak of the demo page
 
-![Screenshot](https://media.giphy.com/media/3o85xHyclVA9nU4fsY/giphy.gif)
+![Screenshot](https://media.giphy.com/media/3ornjY6GrfvyQFAWxG/giphy.gif)
 
 ## Getting started
 
@@ -48,11 +48,11 @@ Text with a special context menu
 Text with a standard context menu
 <l2t-context-menu parentclass="specialcase">
   <li><b>First List Items:</b></li>
-  <li><a href="#">Item 1</a></li>
-  <li><a href="#">Item 2</a></li>
+  <paper-item><a href="#">Item 1</a></paper-item>
+  <paper-item><a href="#">Item 2</a></paper-item>
   <hr>
   <li><b>More Items:</b></li>
-  <li><a href="#">Item 3</a></li>
+  <paper-item><a href="#">Item 3</a></paper-item>
 </l2t-context-menu>
 </body>
 ```
@@ -66,11 +66,11 @@ To theme the menu from above we would have added a few extra attributes
   linkcolor="#FFE0B2" backcolor="#F57C00" 
   headcolor="#fff" sepacolor="#FFE0B2">
   <li><b>First List Items:</b></li>
-  <li><a href="#">Item 1</a></li>
-  <li><a href="#">Item 2</a></li>
+  <paper-item><a href="#">Item 1</a></paper-item>
+  <paper-item><a href="#">Item 2</a></paper-item>
   <hr>
   <li><b>More Items:</b></li>
-  <li><a href="#">Item 3</a></li>
+  <paper-item><a href="#">Item 3</a></paper-item>
 </l2t-context-menu>
 ```
 Let's have a little look at what we just made:
