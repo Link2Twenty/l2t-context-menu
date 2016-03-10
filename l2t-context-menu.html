@@ -232,8 +232,8 @@ __Example:__
           menuHeight=menu.offsetHeight+4,
           windowWidth=window.innerWidth,
           windowHeight=window.innerHeight,
-          menu.style.left=menuWidth>windowWidth-clickCoordsX?windowWidth-menuWidth+"px":clickCoordsX+"px",
-          menu.style.top=menuHeight>windowHeight-clickCoordsY?windowHeight-menuHeight+"px":clickCoordsY+"px"
+          menu.style.left=menuWidth>windowWidth-clickCoordsX?clickCoordsX-menuWidth+"px":clickCoordsX+"px",
+          menu.style.top=menuHeight>windowHeight-clickCoordsY?clickCoordsY-menuHeight+"px":clickCoordsY+"px"
         }
         var contextSubmenuClassName="menu-trigger",
         contextMenuActive="context-menu--active",
