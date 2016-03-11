@@ -1,14 +1,24 @@
-<link rel="import" href="../paper-material/paper-material.html" />
+<link rel="import" href="../paper-menu/paper-menu.html" />
+<link rel="import" href="../paper-menu/paper-submenu.html" />
 
 <!--
 Polymer element to replace right click functionality.
 
 __Example:__
 
-    <l2t-context-menu parentclass="deletable">
-      <li>
-        <a href="#">Delete</a>
-      </li>
+    <l2t-context-menu parentclass="standardExample">
+      <paper-item>
+        <a href="#">Normal Item</a>
+      </paper-item>
+    </l2t-context-menu>
+
+    <l2t-context-menu parentclass="submenuExample">
+      <paper-submenu opened>
+        <paper-item class="menu-trigger">Submenu Head</paper-item>
+        <paper-menu class="menu-content">
+          <paper-item><a href='#'>Submenu Item</a></paper-item>
+        </paper-menu>
+      </paper-submenu>
     </l2t-context-menu>
 
 @demo
@@ -22,22 +32,22 @@ __Example:__
     z-index: 10;
     padding: 12px;
     background-color: var(--context-back-color);
+	-moz-box-shadow:0 2px 5px 0 rgba(0,0,0,.4);
+	box-shadow:0 2px 5px 0 rgba(0,0,0,.4);
   }
 
   .context-menu--active {
     display: block;
   }
 
-  .context-menu__items {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  ::content li{
+  ::content li, ::content paper-item{
     display: block;
     color: var(--context-head-color);
     padding: 2px;
+  }
+  
+  ::content paper-item {
+	cursor: pointer;
   }
 
   ::content li:last-child {
@@ -59,13 +69,15 @@ __Example:__
   ::content hr {
     border-color: var(--context-sepa-color);
   }
+  
+  ::content .paper-menu-0{
+	background-color: var(--context-back-color);
+  }
   </style>
   <template>
-    <paper-material id="context-menu" class="context-menu" elevation="2">
-      <ul class="context-menu__items">
+    <paper-menu id="context-menu" class="context-menu">
         <content></content>
-      </ul>
-    </paper-material>
+    </paper-menu>
   </template>
 </dom-module>
 <script>
@@ -138,6 +150,117 @@ __Example:__
           value: '#bcbcbc',
           notify: true
         },
+		/** 
+        * Boolean for storing value
+        * for menu state
+        *
+        * @attribute _menuState
+        * @type Boolean
+        * @default "false"
+        */
+		_menuState: {
+          type: Boolean,
+          value: 'false',
+          notify: true
+        },
+      },
+	  /**
+      * Function to show the menu
+      * updates class and vibrates on phones
+      *
+      */
+      toggleMenuOn: function (){
+        1!==this._menuState&&(this._menuState=1,
+        Polymer.dom(this.root).querySelector("#context-menu").classList.add('context-menu--active'));
+		// Error catcher for IE and Edge
+		if (typeof navigator.vibrate === "function") { 
+		  navigator.vibrate([25])
+		}
+      },
+	  /**
+      * Function to hide the menu
+      * updates class
+      *
+      */
+	  toggleMenuOff: function(){
+        0!==this._menuState&&(this._menuState=0,
+        Polymer.dom(this.root).querySelector("#context-menu").classList.remove('context-menu--active'))
+      },
+	  /**
+      * Function to work out to place
+      * click event and return boolean
+      *
+      */
+	  clickInsideElement: function(e,t) {
+        var n=e.srcElement||e.target;
+        if(n.classList.contains(t))return n;
+          for(;n=n.parentNode;)
+         if(n.classList&&n.classList.contains(t))return n;
+          return!1
+      },
+	  /**
+      * Function to listen for clicks
+      * and pass data on to clickInsideElement
+	  * hides menu if click is not allowed
+      *
+      */
+	  clickListener: function(){
+		var $this = this;
+        document.addEventListener("click",function(e){
+          var t=$this.clickInsideElement(e,'menu-trigger');
+          if(!t)
+            var n=e.which||e.button;
+            1===n&&$this.toggleMenuOff()
+        })
+      },
+	  /**
+      * Function to listen for context menu
+      * and pass data on to clickInsideElement
+	  * shows menu is click is in parentclass
+      *
+      */
+	  contextListener: function(){
+		var taskItemInContext,
+			$this = this;
+        document.addEventListener("contextmenu",function(e){
+          taskItemInContext=$this.clickInsideElement(e, $this.parentclass),
+          taskItemInContext?(e.preventDefault(),$this.toggleMenuOn(),$this.positionMenu(e)):(taskItemInContext=null,$this.toggleMenuOff())
+        })
+      },
+	  /**
+      * Function to listen for keyup
+      * hides menu is ESC is pressed
+      *
+      */
+	  keyupListener: function(){
+		var $this = this;
+        window.onkeyup=function(e){
+          27===e.keyCode&&$this.toggleMenuOff()
+        }
+      },
+	  /**
+      * Function to listen for page resize
+      * hides menu when actioned
+      *
+      */
+	  resizeListener: function(){
+		var $this = this;
+        window.onresize=function(){
+          $this.toggleMenuOff()
+        }
+      },
+	  /**
+      * Function to get mouse position
+      * and return x and y values
+      *
+      */
+	  getPosition: function(e){
+        t=0,
+        n=0;
+        if(!e)var e=window.event;
+        return e.pageX||e.pageY?(t=e.pageX,n=e.pageY):
+        (e.clientX||e.clientY)&&(t=e.clientX+document.body.scrollLeft+document.documentElement.scrollLeft,n=e.clientY+document.body.scrollTop+document.documentElement.scrollTop),
+        {x:t,y:n}
       },
       /**
       * Function to set theme colors
@@ -151,6 +274,34 @@ __Example:__
         this.customStyle['--context-sepa-color'] = this.sepacolor;
         this.updateStyles();
       },
+	  /**
+      * Function to start all listeners
+      * called when the dom is ready
+      *
+      */
+	  listenerInit : function() {
+		this.contextListener();
+		this.clickListener();
+		this.keyupListener();
+		this.resizeListener();
+	  },
+	  /**
+      * Function to move the menu
+      * passes information to getPosition
+	  * to get x and y cords, then restyles
+      *
+      */
+	  positionMenu: function(e){
+        clickCoords=this.getPosition(e),
+        clickCoordsX=clickCoords.x,
+        clickCoordsY=clickCoords.y,
+        menuWidth=Polymer.dom(this.root).querySelector("#context-menu").offsetWidth+4,
+        menuHeight=Polymer.dom(this.root).querySelector("#context-menu").offsetHeight+4,
+        windowWidth=window.innerWidth,
+        windowHeight=window.innerHeight,
+        Polymer.dom(this.root).querySelector("#context-menu").style.left=menuWidth>windowWidth-clickCoordsX?clickCoordsX-menuWidth+"px":clickCoordsX+"px",
+        Polymer.dom(this.root).querySelector("#context-menu").style.top=menuHeight>windowHeight-clickCoordsY?clickCoordsY-menuHeight+"px":clickCoordsY+"px"
+      },
       /**
       * Starting the scripts
       * domReady for when the dom is... rea
@@ -158,93 +309,7 @@ __Example:__
       */
       ready: function() {
         this.themeInit();
-        function clickInsideElement(e,t){
-          var n=e.srcElement||e.target;
-          if(n.classList.contains(t))return n;
-            for(;n=n.parentNode;)
-           if(n.classList&&n.classList.contains(t))return n;
-            return!1
-        }
-        function getPosition(e){
-          var t=0,
-          n=0;
-          if(!e)var e=window.event;
-          return e.pageX||e.pageY?(t=e.pageX,n=e.pageY):
-          (e.clientX||e.clientY)&&(t=e.clientX+document.body.scrollLeft+document.documentElement.scrollLeft,n=e.clientY+document.body.scrollTop+document.documentElement.scrollTop),
-          {x:t,y:n}
-        }
-        function init(){
-          contextListener(),
-          clickListener(),
-          keyupListener(),
-          resizeListener()
-        }
-        function contextListener(){
-          document.addEventListener("contextmenu",function(e){
-            taskItemInContext=clickInsideElement(e, taskItemClassName),
-            taskItemInContext?(e.preventDefault(),toggleMenuOn(),positionMenu(e)):(taskItemInContext=null,toggleMenuOff())
-          })
-        }
-        function clickListener(){
-          document.addEventListener("click",function(e){
-            var t=clickInsideElement(e,contextMenuLinkClassName);
-            if(t)e.preventDefault(),
-              menuItemListener(t);
-            else{
-              var n=e.which||e.button;
-              1===n&&toggleMenuOff()
-            }
-          })
-        }
-        function keyupListener(){
-          window.onkeyup=function(e){
-            27===e.keyCode&&toggleMenuOff()
-          }
-        }
-        function resizeListener(){
-          window.onresize=function(){
-            toggleMenuOff()
-          }
-        }
-        function toggleMenuOn(){
-          1!==menuState&&(menuState=1,
-          menu.classList.add(contextMenuActive))
-        }
-        function toggleMenuOff(){
-          0!==menuState&&(menuState=0,
-          menu.classList.remove(contextMenuActive))
-        }
-        function positionMenu(e){
-          clickCoords=getPosition(e),
-          clickCoordsX=clickCoords.x,
-          clickCoordsY=clickCoords.y,
-          menuWidth=menu.offsetWidth+4,
-          menuHeight=menu.offsetHeight+4,
-          windowWidth=window.innerWidth,
-          windowHeight=window.innerHeight,
-          menu.style.left=menuWidth>windowWidth-clickCoordsX?windowWidth-menuWidth+"px":clickCoordsX+"px",
-          menu.style.top=menuHeight>windowHeight-clickCoordsY?windowHeight-menuHeight+"px":clickCoordsY+"px"
-        }
-        var contextMenuClassName="context-menu",
-        contextMenuItemClassName="context-menu__item",
-        contextMenuLinkClassName="context-menu__link",
-        contextMenuActive="context-menu--active",
-        taskItemClassName=this.parentclass,
-        taskItemInContext,
-        clickCoords,
-        clickCoordsX,
-        clickCoordsY,
-        menu=Polymer.dom(this.root).querySelector("#context-menu"),
-        menuItems=menu.querySelectorAll(".context-menu__item"),
-        menuState=0,
-        menuWidth,
-        menuHeight,
-        menuPosition,
-        menuPositionX,
-        menuPositionY,
-        windowWidth,
-        windowHeight;
-        init();
+		this.listenerInit();
       }
     });
   })();
