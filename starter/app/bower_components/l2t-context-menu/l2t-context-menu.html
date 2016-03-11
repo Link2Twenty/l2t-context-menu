@@ -177,6 +177,7 @@ __Example:__
            if(n.classList&&n.classList.contains(t))return n;
             return!1
         }
+		// Function to get position
         function getPosition(e){
           var t=0,
           n=0;
@@ -185,18 +186,21 @@ __Example:__
           (e.clientX||e.clientY)&&(t=e.clientX+document.body.scrollLeft+document.documentElement.scrollLeft,n=e.clientY+document.body.scrollTop+document.documentElement.scrollTop),
           {x:t,y:n}
         }
+		// Function to run all listeners
         function init(){
           contextListener(),
           clickListener(),
           keyupListener(),
           resizeListener()
         }
+		// Function to listen for context menu (moves menu to right position)
         function contextListener(){
           document.addEventListener("contextmenu",function(e){
             taskItemInContext=clickInsideElement(e, taskItemClassName),
             taskItemInContext?(e.preventDefault(),toggleMenuOn(),positionMenu(e)):(taskItemInContext=null,toggleMenuOff())
           })
         }
+		// Function to listen for clicks (close menu unless submenu)
         function clickListener(){
           document.addEventListener("click",function(e){
             var t=clickInsideElement(e,contextSubmenuClassName);
@@ -205,25 +209,33 @@ __Example:__
               1===n&&toggleMenuOff()
           })
         }
+		// Function listen for ESC kep press (close menu)
         function keyupListener(){
           window.onkeyup=function(e){
             27===e.keyCode&&toggleMenuOff()
           }
         }
+		// Function listen for pafe resize (close menu)
         function resizeListener(){
           window.onresize=function(){
             toggleMenuOff()
           }
         }
+		// Function show menu, vibrate 25/1000 seconds
         function toggleMenuOn(){
           1!==menuState&&(menuState=1,
-          menu.classList.add(contextMenuActive)),
-          navigator.vibrate([25])
+          menu.classList.add(contextMenuActive));
+		  // Error catcher for IE and Edge
+		  if (typeof navigator.vibrate === "function") { 
+			navigator.vibrate([25])
+		  }
         }
+		// Function to hide menu
         function toggleMenuOff(){
           0!==menuState&&(menuState=0,
           menu.classList.remove(contextMenuActive))
         }
+		// Function calculates location based on click events
         function positionMenu(e){
           clickCoords=getPosition(e),
           clickCoordsX=clickCoords.x,
@@ -235,6 +247,7 @@ __Example:__
           menu.style.left=menuWidth>windowWidth-clickCoordsX?clickCoordsX-menuWidth+"px":clickCoordsX+"px",
           menu.style.top=menuHeight>windowHeight-clickCoordsY?clickCoordsY-menuHeight+"px":clickCoordsY+"px"
         }
+		// Variables
         var contextSubmenuClassName="menu-trigger",
         contextMenuActive="context-menu--active",
         taskItemClassName=this.parentclass,
@@ -248,6 +261,7 @@ __Example:__
         menuHeight,
         windowWidth,
         windowHeight;
+		// Call init to get the call rolling
         init();
       }
     });

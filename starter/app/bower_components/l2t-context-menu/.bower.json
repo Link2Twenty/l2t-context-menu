@@ -24,11 +24,11 @@
     "polymer": "Polymer/polymer#^1.1.0",
     "paper-menu": "PolymerElements/paper-menu#^1.0.0"
   },
-  "_release": "5a45a5eb8f",
+  "_release": "cd4151573e",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "5a45a5eb8fad135bdb2a2d28db8c2933a8f10648"
+    "commit": "cd4151573e194acac7c7af4b8e808a882bc3a584"
   },
   "_source": "git://github.com/Link2Twenty/l2t-context-menu.git",
   "_target": "*",

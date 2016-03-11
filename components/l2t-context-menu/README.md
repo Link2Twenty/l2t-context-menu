@@ -1,6 +1,8 @@
 # < l2t-context-menu >
 Have a quick look at the [Component page](http://link2twenty.github.io/l2t-context-menu/components/l2t-context-menu/)
 
+Here is a demo where l2t-context-menu is used with the [Polymer Starter Kit](http://link2twenty.github.io/l2t-context-menu/starter/app) to use right hand click anywhere within the purple/blue header.
+
 ## What is it?
 "l2t-context-menu" is a polymer element to replace the standard right click 'context menu'.
 
