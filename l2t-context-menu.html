@@ -309,7 +309,103 @@ __Example:__
       */
       ready: function() {
         this.themeInit();
+<<<<<<< HEAD
 		this.listenerInit();
+=======
+        function clickInsideElement(e,t){
+          var n=e.srcElement||e.target;
+          if(n.classList.contains(t))return n;
+            for(;n=n.parentNode;)
+           if(n.classList&&n.classList.contains(t))return n;
+            return!1
+        }
+		// Function to get position
+        function getPosition(e){
+          var t=0,
+          n=0;
+          if(!e)var e=window.event;
+          return e.pageX||e.pageY?(t=e.pageX,n=e.pageY):
+          (e.clientX||e.clientY)&&(t=e.clientX+document.body.scrollLeft+document.documentElement.scrollLeft,n=e.clientY+document.body.scrollTop+document.documentElement.scrollTop),
+          {x:t,y:n}
+        }
+		// Function to run all listeners
+        function init(){
+          contextListener(),
+          clickListener(),
+          keyupListener(),
+          resizeListener()
+        }
+		// Function to listen for context menu (moves menu to right position)
+        function contextListener(){
+          document.addEventListener("contextmenu",function(e){
+            taskItemInContext=clickInsideElement(e, taskItemClassName),
+            taskItemInContext?(e.preventDefault(),toggleMenuOn(),positionMenu(e)):(taskItemInContext=null,toggleMenuOff())
+          })
+        }
+		// Function to listen for clicks (close menu unless submenu)
+        function clickListener(){
+          document.addEventListener("click",function(e){
+            var t=clickInsideElement(e,contextSubmenuClassName);
+            if(!t)
+              var n=e.which||e.button;
+              1===n&&toggleMenuOff()
+          })
+        }
+		// Function listen for ESC kep press (close menu)
+        function keyupListener(){
+          window.onkeyup=function(e){
+            27===e.keyCode&&toggleMenuOff()
+          }
+        }
+		// Function listen for pafe resize (close menu)
+        function resizeListener(){
+          window.onresize=function(){
+            toggleMenuOff()
+          }
+        }
+		// Function show menu, vibrate 25/1000 seconds
+        function toggleMenuOn(){
+          1!==menuState&&(menuState=1,
+          menu.classList.add(contextMenuActive));
+		  // Error catcher for IE and Edge
+		  if (typeof navigator.vibrate === "function") { 
+			navigator.vibrate([25])
+		  }
+        }
+		// Function to hide menu
+        function toggleMenuOff(){
+          0!==menuState&&(menuState=0,
+          menu.classList.remove(contextMenuActive))
+        }
+		// Function calculates location based on click events
+        function positionMenu(e){
+          clickCoords=getPosition(e),
+          clickCoordsX=clickCoords.x,
+          clickCoordsY=clickCoords.y,
+          menuWidth=menu.offsetWidth+4,
+          menuHeight=menu.offsetHeight+4,
+          windowWidth=window.innerWidth,
+          windowHeight=window.innerHeight,
+          menu.style.left=menuWidth>windowWidth-clickCoordsX?clickCoordsX-menuWidth+"px":clickCoordsX+"px",
+          menu.style.top=menuHeight>windowHeight-clickCoordsY?clickCoordsY-menuHeight+"px":clickCoordsY+"px"
+        }
+		// Variables
+        var contextSubmenuClassName="menu-trigger",
+        contextMenuActive="context-menu--active",
+        taskItemClassName=this.parentclass,
+        taskItemInContext,
+        clickCoords,
+        clickCoordsX,
+        clickCoordsY,
+        menu=Polymer.dom(this.root).querySelector("#context-menu"),
+        menuState=0,
+        menuWidth,
+        menuHeight,
+        windowWidth,
+        windowHeight;
+		// Call init to get the call rolling
+        init();
+>>>>>>> cd4151573e194acac7c7af4b8e808a882bc3a584
       }
     });
   })();
