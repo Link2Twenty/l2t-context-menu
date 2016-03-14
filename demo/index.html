@@ -98,11 +98,17 @@
     <demo-snippet><b>Javascript:</b> (Just to simulate function)
       <template>
         <script>
+          var storeClicked;
+          function storeDelete(e) {
+            if(e.which == 3) {
+              storeClicked = document.getElementById(e.target.id);
+            }
+          }
           function deleteFake() {
-            document.getElementById(storeClicked).className = "done";
+            storeClicked.className = "done";
           }
           function undeleteFake() {
-            document.getElementById(storeClicked).className = "deletable";
+            storeClicked.className = "deletable";
           }
         </script>
       </template>
@@ -153,14 +159,8 @@
     <demo-snippet><b>Javascript:</b> (Just to simulate function)
       <template>
         <script>
-          var storeClicked;
           function colorUpdate(color) {
             document.querySelector(".colorbox").style.backgroundColor = color;
-          }
-          function storeDelete(e) {
-            if(e.which == 3) {
-              storeClicked = e.target.id;
-            }
           }
         </script>
       </template>
