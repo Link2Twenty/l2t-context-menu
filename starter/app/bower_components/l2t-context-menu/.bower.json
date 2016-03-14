@@ -22,13 +22,14 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.1.0",
-    "paper-menu": "PolymerElements/paper-menu#^1.0.0"
+    "paper-menu": "PolymerElements/paper-menu#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.1.0"
   },
-  "_release": "88938f1e68",
+  "_release": "4f88b127bd",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "88938f1e68b1d270a384be157d099a143c09d2f6"
+    "commit": "4f88b127bd4497d90f0b06836967253cb50bfeb5"
   },
   "_source": "git://github.com/Link2Twenty/l2t-context-menu.git",
   "_target": "*",

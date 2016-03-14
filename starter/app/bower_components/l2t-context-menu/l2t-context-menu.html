@@ -1,16 +1,21 @@
+<link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../paper-menu/paper-menu.html" />
 <link rel="import" href="../paper-menu/paper-submenu.html" />
 
 <!--
   Polymer element to replace right click functionality.
 
-  __Example:__
+  ### Examples
+  You can do anything you would expect to be able to do within paper-menu. See the documentation for that element here: <a href="https://elements.polymer-project.org/elements/paper-menu">Paper-menu</a>.
+  The only real difference is that l2t-context-menu tags are used as the initial paper-menu tags.
 
       <l2t-context-menu parentclass="standardExample">
         <paper-item>
           <a href="#">Normal Item</a>
         </paper-item>
       </l2t-context-menu>
+      
+  You may need to use actual paper-menu tags further down the chain if they are required, like when using submenus for instance.
 
       <l2t-context-menu parentclass="submenuExample">
         <paper-submenu opened>
@@ -20,8 +25,20 @@
           </paper-menu>
         </paper-submenu>
       </l2t-context-menu>
+  
+  ### Styling
+    
+The following custom properties are available for styling:
 
-  @demo
+Custom property | Description | Default
+----------------|-------------|----------
+`--context-background-color` | Background color of the menu. | `#fff`
+`--context-text-color` | Text color within the menu. | `#333`
+`--context-link-text-color` | Text color and on hover background color for links<br>For text within 'A' tags. | `#0066aa`
+`--context-horizontal-rule-color` | Color of 'HR' tags. | `#bcbcbc`
+
+  @element l2t-context-menu
+  @demo demo/index.html
 -->
 
 <dom-module id="l2t-context-menu">
@@ -31,7 +48,7 @@
       position: absolute;
       z-index: 10;
       padding: 12px;
-      background-color: var(--context-back-color);
+      background-color: var(--context-background-color, #fff);
       -moz-box-shadow:0 2px 5px 0 rgba(0,0,0,.4);
       box-shadow:0 2px 5px 0 rgba(0,0,0,.4);
     }
@@ -42,7 +59,7 @@
 
     ::content li, ::content paper-item{
       display: block;
-      color: var(--context-head-color);
+      color: var(--context-text-color, #333);
       padding: 2px;
     }
 
@@ -56,22 +73,22 @@
 
     ::content a {
       display: block;
-      color: var(--context-link-color);
+      color: var(--context-link-text-color, #0066aa);
       padding: 4px 12px;
       text-decoration: none;
     }
 
     ::content a:hover {
-      background-color: var(--context-link-color);
-      color: var(--context-back-color);
+      background-color: var(--context-link-text-color, #0066aa);
+      color: var(--context-background-color, #fff);
     }
 
     ::content hr {
-      border-color: var(--context-sepa-color);
+      border-color: var(--context-horizontal-rule-color, #bcbcbc);
     }
 
     ::content .paper-menu-0{
-      background-color: var(--context-back-color);
+      background-color: var(--context-background-color, #fff);
     }                                       
   </style>
   <template>
@@ -98,58 +115,6 @@
         value: 'default',
         notify: true
         },
-        /**
-        * Sting for storing theme color
-        * for mouse over and link color
-        *
-        * @attribute linkcolor
-        * @type String
-        * @default "#0066aa"
-        */
-        linkcolor: {
-        type: String,
-        value: '#0066aa',
-        notify: true
-        },
-        /** 
-        * Sting for storing theme color
-        * for background color
-        *
-        * @attribute backcolor
-        * @type String
-        * @default "#fff"
-        */
-        backcolor: {
-        type: String,
-        value: '#fff',
-        notify: true
-        },
-        /** 
-        * Sting for storing theme color
-        * for standard text color
-        *
-        * @attribute headcolor
-        * @type String
-        * @default "#333"
-        */
-        headcolor: {
-        type: String,
-        value: '#333',
-        notify: true
-        },
-        /** 
-        * Sting for storing theme color
-        * for < hr > separaters
-        *
-        * @attribute sepacolor
-        * @type String
-        * @default "#9a9a9a"
-        */
-        sepacolor: {
-        type: String,
-        value: '#bcbcbc',
-        notify: true
-        },
         /** 
         * Boolean for storing value
         * for menu state
@@ -165,11 +130,11 @@
         },
       },
       /**
-      * Function to show the menu
+      * Method to show the menu
       * updates class and vibrates on phones
       *
       */
-      toggleMenuOn: function (){
+      _toggleMenuOn: function (){
         1!==this._menuState&&(this._menuState=1,
         Polymer.dom(this.root).querySelector("#context-menu").classList.add('context-menu--active'));
         // Error catcher for IE and Edge
@@ -178,20 +143,20 @@
         }
       },
       /**
-      * Function to hide the menu
+      * Method to hide the menu
       * updates class
       *
       */
-      toggleMenuOff: function(){
+      _toggleMenuOff: function(){
         0!==this._menuState&&(this._menuState=0,
         Polymer.dom(this.root).querySelector("#context-menu").classList.remove('context-menu--active'))
       },
       /**
-      * Function to work out to place
+      * Method to work out to place
       * click event and return boolean
       *
       */
-      clickInsideElement: function(e,t) {
+      _clickInsideElement: function(e,t) {
         var n=e.srcElement||e.target;
         if(n.classList.contains(t))return n;
         for(;n=n.parentNode;)
@@ -199,100 +164,87 @@
         return!1
       },
       /**
-      * Function to listen for clicks
-      * and pass data on to clickInsideElement
+      * Method to listen for clicks
+      * and pass data on to _clickInsideElement
       * hides menu if click is not allowed
       *
       */
-      clickListener: function(){
+      _clickListener: function(){
         var $this = this;
         document.addEventListener("click",function(e){
-          var t=$this.clickInsideElement(e,'menu-trigger');
+          var t=$this._clickInsideElement(e,'menu-trigger');
           if(!t)
           var n=e.which||e.button;
-          1===n&&$this.toggleMenuOff()
+          1===n&&$this._toggleMenuOff()
         })
       },
       /**
-      * Function to listen for context menu
-      * and pass data on to clickInsideElement
+      * Method to listen for context menu
+      * and pass data on to _clickInsideElement
       * shows menu is click is in parentclass
       *
       */
-      contextListener: function(){
+      _contextListener: function(){
         var taskItemInContext,
         $this = this;
         document.addEventListener("contextmenu",function(e){
-          taskItemInContext=$this.clickInsideElement(e, $this.parentclass),
-          taskItemInContext?(e.preventDefault(),$this.toggleMenuOn(),$this.positionMenu(e)):(taskItemInContext=null,$this.toggleMenuOff())
+          taskItemInContext=$this._clickInsideElement(e, $this.parentclass),
+          taskItemInContext?(e.preventDefault(),$this._toggleMenuOn(),$this._positionMenu(e)):(taskItemInContext=null,$this._toggleMenuOff())
         })
       },
       /**
-      * Function to listen for keyup
+      * Method to listen for keyup
       * hides menu is ESC is pressed
       *
       */
-      keyupListener: function(){
+      _keyupListener: function(){
         var $this = this;
         window.onkeyup=function(e){
-          27===e.keyCode&&$this.toggleMenuOff()
+          27===e.keyCode&&$this._toggleMenuOff()
         }
       },
       /**
-      * Function to listen for page resize
+      * Method to listen for page resize
       * hides menu when actioned
       *
       */
-      resizeListener: function(){
+      _resizeListener: function(){
         var $this = this;
         window.onresize=function(){
-          $this.toggleMenuOff()
+          $this._toggleMenuOff()
         }
       },
       /**
-      * Function to get mouse position
+      * Method to get mouse position
       * and return x and y values
       *
       */
-      getPosition: function(e){
-        t=0,
-        n=0;
+      _getPosition: function(e){
+        t=0,n=0;
         if(!e)var e=window.event;
         return e.pageX||e.pageY?(t=e.pageX,n=e.pageY):
         (e.clientX||e.clientY)&&(t=e.clientX+document.body.scrollLeft+document.documentElement.scrollLeft,n=e.clientY+document.body.scrollTop+document.documentElement.scrollTop),
         {x:t,y:n}
       },
       /**
-      * Function to set theme colors
+      * Method to start all listeners
       * called when the dom is ready
       *
       */
-      themeInit: function() {
-        this.customStyle['--context-link-color'] = this.linkcolor;
-        this.customStyle['--context-back-color'] = this.backcolor;
-        this.customStyle['--context-head-color'] = this.headcolor;
-        this.customStyle['--context-sepa-color'] = this.sepacolor;
-        this.updateStyles();
+      _listenerInit : function() {
+        this._contextListener();
+        this._clickListener();
+        this._keyupListener();
+        this._resizeListener();
       },
       /**
-      * Function to start all listeners
-      * called when the dom is ready
-      *
-      */
-      listenerInit : function() {
-        this.contextListener();
-        this.clickListener();
-        this.keyupListener();
-        this.resizeListener();
-      },
-      /**
-      * Function to move the menu
-      * passes information to getPosition
+      * Method to move the menu
+      * passes information to _getPosition
       * to get x and y cords, then restyles
       *
       */
-      positionMenu: function(e){
-        clickCoords=this.getPosition(e),
+      _positionMenu: function(e){
+        clickCoords=this._getPosition(e),
         clickCoordsX=clickCoords.x,
         clickCoordsY=clickCoords.y,
         menuWidth=Polymer.dom(this.root).querySelector("#context-menu").offsetWidth+4,
@@ -303,13 +255,12 @@
         Polymer.dom(this.root).querySelector("#context-menu").style.top=menuHeight>windowHeight-clickCoordsY?clickCoordsY-menuHeight+"px":clickCoordsY+"px"
       },
       /**
-      * Starting the scripts
+      * Method the scripts
       * domReady for when the dom is... rea
       *
       */
       ready: function() {
-        this.themeInit();
-        this.listenerInit();
+        this._listenerInit();
       }
     });
   })();

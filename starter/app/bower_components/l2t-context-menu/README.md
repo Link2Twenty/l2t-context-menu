@@ -25,12 +25,17 @@ bower install --save l2t-context-menu
 | Attribute Name | Functionality | Default |
 |----------------|-------------|-------------|
 | parentclass* | Sting for storing class name of which classes should be listened too | "default" |
-| linkcolor | Sting for storing theme color for mouse over and link color | "#0066aa" |
-| backcolor | Sting for storing theme color for background color | "#fff" |
-| headcolor | Sting for storing theme color for standard text color | "#333" |
-| sepacolor | Sting for storing theme color for < hr > separaters | "#bcbcbc" |
 
 required*
+
+### Styling
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--context-background-color` | Background color of the menu. | `#fff`
+`--context-text-color` | Text color within the menu. | `#333`
+`--context-link-text-color` | Text color and on hover background color for links<br>For text within 'A' tags. | `#0066aa`
+`--context-horizontal-rule-color` | Color of 'HR' tags. | `#bcbcbc`
 
 ### How to use
 
@@ -48,7 +53,7 @@ Now that you have imported it you can get to using it on your page
 Text with a special context menu
 </div>
 Text with a standard context menu
-<l2t-context-menu parentclass="specialcase">
+<l2t-context-menu parentclass="specialcase" class="orange">
   <li><b>First List Items:</b></li>
   <paper-item><a href="#">Item 1</a></paper-item>
   <paper-item><a href="#">Item 2</a></paper-item>
@@ -61,19 +66,16 @@ Text with a standard context menu
 
 And just like that you have a custom menu, right click within the div and the custom menu opens right click anywhere else and you get the standard one.
 
-To theme the menu from above we would have added a few extra attributes
+To theme the menu from above we would have added a little something into our head tags
 
 ```html
-<l2t-context-menu parentclass="specialcase" 
-  linkcolor="#FFE0B2" backcolor="#F57C00" 
-  headcolor="#fff" sepacolor="#FFE0B2">
-  <li><b>First List Items:</b></li>
-  <paper-item><a href="#">Item 1</a></paper-item>
-  <paper-item><a href="#">Item 2</a></paper-item>
-  <hr>
-  <li><b>More Items:</b></li>
-  <paper-item><a href="#">Item 3</a></paper-item>
-</l2t-context-menu>
+<style is="custom-style">
+  .orange {
+    --context-background-color: #F57C00;
+    --context-text-color: #FFF;
+    --context-link-text-color: #FFE0B2;
+  }
+</style>
 ```
 Let's have a little look at what we just made:
 ![Screenshot](https://media.giphy.com/media/3oEduLDQYvcl6cSM2Q/giphy.gif)
