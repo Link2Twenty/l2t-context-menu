@@ -53,7 +53,7 @@ Now that you have imported it you can get to using it on your page
 Text with a special context menu
 </div>
 Text with a standard context menu
-<l2t-context-menu parentclass="specialcase">
+<l2t-context-menu parentclass="specialcase" class="orange">
   <li><b>First List Items:</b></li>
   <paper-item><a href="#">Item 1</a></paper-item>
   <paper-item><a href="#">Item 2</a></paper-item>
