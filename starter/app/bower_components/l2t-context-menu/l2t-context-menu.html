@@ -220,8 +220,6 @@ Custom property | Description | Default
       *
       */
       _getPosition: function(e){
-        t=0,n=0;
-        if(!e)var e=window.event;
         return e.pageX||e.pageY?(t=e.pageX,n=e.pageY):
         (e.clientX||e.clientY)&&(t=e.clientX+document.body.scrollLeft+document.documentElement.scrollLeft,n=e.clientY+document.body.scrollTop+document.documentElement.scrollTop),
         {x:t,y:n}
@@ -244,15 +242,16 @@ Custom property | Description | Default
       *
       */
       _positionMenu: function(e){
-        clickCoords=this._getPosition(e),
-        clickCoordsX=clickCoords.x,
-        clickCoordsY=clickCoords.y,
-        menuWidth=Polymer.dom(this.root).querySelector("#context-menu").offsetWidth+4,
-        menuHeight=Polymer.dom(this.root).querySelector("#context-menu").offsetHeight+4,
-        windowWidth=window.innerWidth,
-        windowHeight=window.innerHeight,
-        Polymer.dom(this.root).querySelector("#context-menu").style.left=menuWidth>windowWidth-clickCoordsX?clickCoordsX-menuWidth+"px":clickCoordsX+"px",
-        Polymer.dom(this.root).querySelector("#context-menu").style.top=menuHeight>windowHeight-clickCoordsY?clickCoordsY-menuHeight+"px":clickCoordsY+"px"
+        clickCoords = this._getPosition(e),
+        menuSelector = Polymer.dom(this.root).querySelector("#context-menu"),
+        menuWidth = menuSelector.offsetWidth + 4,
+        menuHeight = menuSelector.offsetHeight + 4,
+        windowWidth = window.innerWidth + (clickCoords.x - e.clientX),
+        windowHeight = window.innerHeight + (clickCoords.y - e.clientY),
+        menuCoordsX = menuWidth > windowWidth-clickCoords.x ? clickCoords.x-menuWidth+"px" : clickCoords.x+"px",
+        menuCoordsY = menuHeight > windowHeight-clickCoords.y ? clickCoords.y-menuHeight+"px" : clickCoords.y+"px",
+        menuSelector.style.left = menuCoordsX,
+        menuSelector.style.top = menuCoordsY
       },
       /**
       * Method the scripts
