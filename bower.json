@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git://github.com/Link2Twenty/l2t-context-menu.git"
   },
-  "keywords": ["polymer","web-components"],
+  "keywords": ["polymer","context-menu","menu","right-click","web-components"],
   "license": "MIT",
   "ignore": ["**/.*","node_modules","bower_components","test","tests"],
   "dependencies": {
