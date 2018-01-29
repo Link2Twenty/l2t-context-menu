@@ -1,3 +1,7 @@
+⚠️ DEPRECATED: This project is no longer actively developed ⚠️
+
+Please use [vaadin-context-menu](https://github.com/vaadin/vaadin-context-menu)
+
 # < l2t-context-menu >
 Have a quick look at the [Component page](http://link2twenty.github.io/l2t-context-menu/components/l2t-context-menu/)
 
